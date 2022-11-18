@@ -16,7 +16,8 @@ def load_file_config() -> dict:
 
 def clear_url(url: str) -> str:
     """
-    
+    With a recursive search find a digit in each segment of the url and change it to '?', for easy injection.
+
     :param url:
     :return str
     """
@@ -28,6 +29,8 @@ def clear_url(url: str) -> str:
 
 def validate_grant(endpoint: str, method: str, id_rol: int) -> bool:
     """
+    Request the microservice from security-backend to verify if a specified rol has the provided method and url (Permission).
+
     :param endpoint:
     :param method:
     :param id_rol:

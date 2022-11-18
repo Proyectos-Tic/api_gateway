@@ -5,9 +5,9 @@ headers = {"Content-Type":"application/json; charset=utf-8"}
 
 # Create roles
 roles = [
-    { "name": "Administrador", "description": "Administrador del sistema de notas"},
-    { "name": "Profesor", "description": "El que jode"},
-    { "name": "Student", "description":"El que sufre"}
+    { "name": "Administrador", "description": "Administrador del sistema de votación"},
+    { "name": "Jurado", "description": "Persona natural con algunos permisos en el sistema de votación"},
+    { "name": "Ciudadano", "description":"Persona natural"}
 ]
 
 url = f'{security_backend}/rol/create'
@@ -20,11 +20,11 @@ for rol in roles:
 print("="*30)
 
 # Basic permission related to Admin
-modules = ['student', 'course', 'department', 'enrollment', 'user', 'rol']
-endpoints = [('s', 'GET'), ('/?', 'GET'), ('/create', 'POST'), ('/update/?','PUT'), ('/delete/?', 'DELETE')]
+modules = ['candidato', 'mesa', 'partido', 'reports' , 'enrollment', 'user', 'rol']
+endpoints_ag = [('/all', 'GET'), ('/?', 'GET'), ('/create', 'POST'), ('/update/?','PUT'), ('/delete/?', 'DELETE')]
 url = f'{security_backend}/permission/create'
 for module in modules:
-    for endpoint, method in endpoints:
+    for endpoint, method in endpoints_ag:
         permission_url = f'/{module}{endpoint}'
         body = {
             "url": permission_url,
