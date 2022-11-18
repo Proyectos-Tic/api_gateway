@@ -6,13 +6,27 @@ from flask_jwt_extended import (JWTManager, create_access_token, verify_jwt_in_r
 import requests
 
 from waitress import serve
-from utils import load_file_config, HEADERS
+from utils import clear_url, load_file_config, HEADERS, validate_grant
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "mission-tic"
 CORS(app)
 jwt = JWTManager(app)
 
+@app.before_request
+def before_request_callback() -> tuple:
+    endpoint = clear_url(request.path)
+    exclude_routes = ['/login','/']
+    if exclude_routes.__contains__(endpoint):
+        pass
+    elif verify_jwt_in_request():
+        user : dict = get_jwt_identity()
+        if user.get('rol'):
+            has_grant = validate_grant(endpoint, request.method, user['rol'].get('idRol') )
+            if not has_grant:
+                return {"message":f"The rol {user['rol']['idRol']}:{user['rol']['name']} doesn't have permission to access {endpoint}"}, 401
+        else:
+            return {"message":"Permission denied. Rol not defined."}, 401
 
 @app.route("/", methods=["GET"])
 def home():
