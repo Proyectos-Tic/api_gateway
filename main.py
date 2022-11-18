@@ -4,6 +4,10 @@ from flask_cors import CORS
 from flask_jwt_extended import (JWTManager, create_access_token, verify_jwt_in_request,
                                 get_jwt_identity)
 from waitress import serve
+from party_blueprints import party_blueprints
+from candidate_blueprints import candidate_blueprints
+from table_blueprints import table_blueprints
+from user_blueprints import user_blueprints
 
 import requests
 
@@ -13,7 +17,10 @@ app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "misiontic"
 cors = CORS(app)
 jwt = JWTManager(app)
-
+app.register_blueprint(party_blueprints)
+app.register_blueprint(candidate_blueprints)
+app.register_blueprint(table_blueprints)
+app.register_blueprint(user_blueprints)
 
 @app.before_request
 def before_request_callback():
@@ -45,7 +52,7 @@ def login() -> tuple:
     if response.status_code == 200:
         user_logged = response.json()
         expires = timedelta(days=1)
-        access_token = create_access_token(identity=user, expires_delta=expires)
+        access_token = create_access_token(identity=user_logged, expires_delta=expires)
         return {"token": access_token, "user_id": user_logged.get('id')}, 200
     else:
         return {"message": "ACCESS DENIED"}, 201
