@@ -26,14 +26,14 @@ def create_partido() -> dict:
     return response.json()
 
 @partido_blueprint.route("/partido/update/<string:id_>", methods=["PATCH"])
-def update_partido(id_ : int) -> dict:
+def update_partido(id_ : str) -> dict:
     partido = request.get_json()
     url = url_base + f'/update/{id_}'
     response = requests.patch(url, headers=HEADERS, json=partido)
     return response.json()
 
 @partido_blueprint.route("/partido/delete/<string:id_>", methods=["DELETE"])
-def delete_partido( id_ : int) -> dict:
+def delete_partido( id_ : str) -> dict:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
     return response.json()

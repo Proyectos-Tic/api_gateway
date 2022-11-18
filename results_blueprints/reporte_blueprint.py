@@ -31,7 +31,7 @@ def get_parties_report() -> dict:
     return response.json()
 
 @reports_blueprint.route("/reports/voto/sorted_partido/<string:id_>", methods=["GET"])
-def get_parties_report_by_id( id_ : int) -> dict:
+def get_parties_report_by_id( id_ : str) -> dict:
     url = url_base + f'/voto/sorted_partido/{id_}'
     response = requests.get(url, headers=HEADERS)
     return response.json()

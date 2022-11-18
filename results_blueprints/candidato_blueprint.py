@@ -26,14 +26,21 @@ def create_candidato() -> dict:
     return response.json()
 
 @candidato_blueprint.route("/candidato/update/<string:id_>", methods=["PATCH"])
-def update_candidato(id_ : int) -> dict:
+def update_candidato(id_ : str) -> dict:
     candidato = request.get_json()
     url = url_base + f'/update/{id_}'
     response = requests.patch(url, headers=HEADERS, json=candidato)
     return response.json()
 
+
+@candidato_blueprint.route("/candidato/<string:id_c>/partido/<string:id_p>", methods=["PUT"])
+def assign_party_to_candidate(id_c : str, id_p : str) -> dict:
+    url = url_base + f'/{id_c}/partido/{id_p}'
+    response = requests.put(url, headers=HEADERS)
+    return response.json()
+
 @candidato_blueprint.route("/candidato/delete/<string:id_>", methods=["DELETE"])
-def delete_candidato( id_ : int) -> dict:
+def delete_candidato( id_ : str) -> dict:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
     return response.json()

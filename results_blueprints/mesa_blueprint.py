@@ -26,14 +26,14 @@ def create_mesa() -> dict:
     return response.json()
 
 @mesa_blueprint.route("/mesa/update/<string:id_>", methods=["PATCH"])
-def update_mesa(id_ : int) -> dict:
+def update_mesa(id_ : str) -> dict:
     mesa = request.get_json()
     url = url_base + f'/update/{id_}'
     response = requests.patch(url, headers=HEADERS, json=mesa)
     return response.json()
 
 @mesa_blueprint.route("/mesa/delete/<string:id_>", methods=["DELETE"])
-def delete_mesa( id_ : int) -> dict:
+def delete_mesa( id_ : str) -> dict:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
     return response.json()

@@ -26,14 +26,14 @@ def create_voto() -> dict:
     return response.json()
 
 @voto_blueprint.route("/voto/update/<string:id_>", methods=["PATCH"])
-def update_voto(id_ : int) -> dict:
+def update_voto(id_ : str) -> dict:
     voto = request.get_json()
     url = url_base + f'/update/{id_}'
     response = requests.patch(url, headers=HEADERS, json=voto)
     return response.json()
 
 @voto_blueprint.route("/voto/delete/<string:id_>", methods=["DELETE"])
-def delete_voto( id_ : int) -> dict:
+def delete_voto( id_ : str) -> dict:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
     return response.json()
