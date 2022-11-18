@@ -19,6 +19,7 @@ for rol in roles:
     print(response.json())
 print("="*30)
 
+# TODO: Create particular endpoints to match permission/rol [user, reports]
 # Basic permission related to Admin
 modules = ['candidato', 'mesa', 'partido', 'reports' , 'enrollment', 'user', 'rol']
 endpoints_ag = [('/all', 'GET'), ('/?', 'GET'), ('/create', 'POST'), ('/update/?','PUT'), ('/delete/?', 'DELETE')]
