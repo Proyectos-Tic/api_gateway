@@ -25,6 +25,9 @@ def clear_url(url: str) -> str:
     for segment in segments:
         if re.search('\\d',segment):
             url = url.replace(segment, "?")
+        if segment == 'by_nickname' or segment == 'by_email':
+            url = url.replace(segments[-1], '?')
+            break
     return url
 
 def validate_grant(endpoint: str, method: str, id_rol: int) -> bool:

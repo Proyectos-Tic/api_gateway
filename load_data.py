@@ -21,12 +21,12 @@ print("="*30)
 
 # TODO: Create particular endpoints to match permission/rol [user, reports, candidate]
 # Basic permission related to Admin
-modules = ['candidato', 'mesa', 'partido', 'voto', 'reports' , 'enrollment', 'user', 'rol']
+modules = ['candidato', 'mesa', 'partido', 'voto', 'reports' , 'permission', 'user', 'rol']
 crud_endpoints = [('/all', 'GET'), ('/?', 'GET'), ('/create', 'POST'), ('/update/?','PUT'), ('/delete/?', 'DELETE')]
 candidatos_endpoint = [('/?/partido/?', 'PUT')]
 user_endpoints = [('/by_id/?', 'GET'), ('/by_nickname/?', 'GET'), ('/by_email/?', 'GET')]
-reports_endpoints = [('/reports/voto/sorted_candidato', 'GET'), ('/reports/voto/sorted_candidato/?', 'GET'), ('/reports/voto/sorted_mesa', 'GET'), ('/reports/voto/sorted_partido', 'GET'),
-                    ('/reports/voto/sorted_partido/?', 'GET'), ('/reports/voto/partido/porcentual', 'GET')]
+reports_endpoints = [('/voto/sorted_candidato', 'GET'), ('/voto/sorted_candidato/?', 'GET'), ('/voto/sorted_mesa', 'GET'), ('/voto/sorted_partido', 'GET'),
+                    ('/voto/sorted_partido/?', 'GET'), ('/voto/partido/porcentual', 'GET')]
 url = f'{security_backend}/permission/create'
 for module in modules:
     temp_endpoints = None
@@ -35,7 +35,7 @@ for module in modules:
     elif module == 'user':
         temp_endpoints = crud_endpoints + user_endpoints
     elif module == 'reports':
-        temp_endpoints = crud_endpoints + reports_endpoints
+        temp_endpoints = reports_endpoints
     else:
         temp_endpoints = crud_endpoints
 
