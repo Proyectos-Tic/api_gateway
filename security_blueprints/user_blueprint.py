@@ -19,13 +19,13 @@ def get_user_by_id(id_ : int) -> dict:
     return response.json()
 
 @user_blueprint.route("/user/by_nickname/<string:id_>", methods=["GET"])
-def get_user_by_id(id_ : str) -> dict:
+def get_user_by_nickname(id_ : str) -> dict:
     url = url_base + f'/by_nickname/{id_}'
     response = requests.get(url, headers=HEADERS)
     return response.json()
 
 @user_blueprint.route("/user/by_email/<string:id_>", methods=["GET"])
-def get_user_by_id(id_ : str) -> dict:
+def get_user_by_email(id_ : str) -> dict:
     url = url_base + f'/by_email/{id_}'
     response = requests.get(url, headers=HEADERS)
     return response.json()
