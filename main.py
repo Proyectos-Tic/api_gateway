@@ -8,10 +8,33 @@ import requests
 from waitress import serve
 from utils import clear_url, load_file_config, HEADERS, validate_grant
 
+#=== Import results-backend blueprints ===
+from results_blueprints.candidato_blueprint import candidato_blueprint
+from results_blueprints.mesa_blueprint import mesa_blueprint
+from results_blueprints.partido_blueprint import partido_blueprint
+from results_blueprints.reporte_blueprint import reports_blueprint
+from results_blueprints.voto_blueprint import voto_blueprint
+
+#=== Import security-backend blueprints ===
+from security_blueprints.permission_blueprint import permission_blueprint
+from security_blueprints.rol_blueprint import rol_blueprint
+from security_blueprints.user_blueprint import user_blueprint
+
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "mission-tic"
 CORS(app)
 jwt = JWTManager(app)
+
+#=== Register results-backend blueprints ===
+app.register_blueprint(candidato_blueprint)
+app.register_blueprint(mesa_blueprint)
+app.register_blueprint(partido_blueprint)
+app.register_blueprint(reports_blueprint)
+app.register_blueprint(voto_blueprint)
+#=== Register security-backend blueprints ===
+app.register_blueprint(permission_blueprint)
+app.register_blueprint(rol_blueprint)
+app.register_blueprint(user_blueprint)
 
 @app.before_request
 def before_request_callback() -> tuple:
@@ -25,6 +48,7 @@ def before_request_callback() -> tuple:
             has_grant = validate_grant(endpoint, request.method, user['rol'].get('idRol') )
             if not has_grant:
                 return {"message":f"The rol {user['rol']['idRol']}:{user['rol']['name']} doesn't have permission to access {endpoint}"}, 401
+            print(f'Permiso:{has_grant}')
         else:
             return {"message":"Permission denied. Rol not defined."}, 401
 
