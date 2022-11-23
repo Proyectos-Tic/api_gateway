@@ -24,7 +24,7 @@ def candidate_by_id(id_: str) -> dict:
 @candidate_blueprints.route("/candidate/insert", methods=['POST'])
 def insert_candidate() -> dict:
     candidate = request.get_json()
-    url = url_base + "/candidate/insert"
+    url = url_base + "/insert"
     response = requests.post(url, headers=HEADERS, json=candidate)
     return response.json()
 

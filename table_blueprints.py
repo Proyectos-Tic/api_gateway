@@ -24,7 +24,7 @@ def get_table_by_id(id_: str) -> dict:
 @table_blueprints.route("/table/insert", methods=['POST'])
 def insert_table() -> dict:
     table = request.get_json()
-    url = url_base + "/table/insert"
+    url = url_base + "/insert"
     response = requests.post(url, headers=HEADERS, json=table)
     return response.json()
 

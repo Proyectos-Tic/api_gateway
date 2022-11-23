@@ -4,7 +4,7 @@ from utils import load_file_config, HEADERS
 
 user_blueprints = Blueprint('user_blueprints', __name__)
 data_config = load_file_config()
-url_base = data_config.get('url-backend-voting') + "/user"
+url_base = data_config.get('url-backend-security') + "/user"
 
 
 @user_blueprints.route("/user", methods=['GET'])
@@ -14,7 +14,7 @@ def get_all_users() -> dict:
     return response.json()
 
 
-@user_blueprints.route("/user/<string:id_>", methods=['GET'])
+@user_blueprints.route("/user/<int:id_>", methods=['GET'])
 def get_user_by_id(id_: int) -> dict:
     url = url_base + f'/{id_}'
     response = requests.get(url, headers=HEADERS)
@@ -24,12 +24,12 @@ def get_user_by_id(id_: int) -> dict:
 @user_blueprints.route("/user/insert", methods=['POST'])
 def insert_user() -> dict:
     user = request.get_json()
-    url = url_base + "/user/insert"
+    url = url_base + "/insert"
     response = requests.post(url, headers=HEADERS, json=user)
     return response.json()
 
 
-@user_blueprints.route("/user/update/<string:id_>", methods=['PATCH'])
+@user_blueprints.route("/user/update/<int:id_>", methods=['PATCH'])
 def update_user(id_: int) -> dict:
     user = request.get_json()
     url = url_base + f'/update/{id_}'
@@ -37,7 +37,7 @@ def update_user(id_: int) -> dict:
     return response.json()
 
 
-@user_blueprints.route("/user/delete/<string:id_>", methods=['DELETE'])
+@user_blueprints.route("/user/delete/<int:id_>", methods=['DELETE'])
 def delete_user(id_: int) -> dict:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)

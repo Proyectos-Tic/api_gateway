@@ -16,13 +16,26 @@ def load_file_config():
 
 
 def clear_url(url: str) -> str:
+    """
+
+    :param url:
+    :return:
+    """
     segments = url.split("/")
     for segment in segments:
         if re.search('\\d', segment):
             url = url.replace(segment, "?")
+    return url
 
 
 def validate_grant(endpoint: str, method: str, id_rol: int):
+    """
+
+    :param endpoint:
+    :param method:
+    :param id_rol:
+    :return:
+    """
     data_config = load_file_config()
     url = data_config.get("url-backend-security") + f"/rol/validate/{id_rol}"
     body = {

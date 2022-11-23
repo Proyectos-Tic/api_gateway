@@ -52,7 +52,7 @@ def home():
 @app.route("/login", methods=['POST'])
 def login() -> tuple:
     user = request.get_json()
-    url = data_config.get("url-backend-security") + "user/login"
+    url = data_config.get("url-backend-security") + "/user/login"
     response = requests.post(url, headers=utils.HEADERS, json=user)
     if response.status_code == 200:
         user_logged = response.json()

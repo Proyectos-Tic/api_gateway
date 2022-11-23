@@ -10,6 +10,6 @@ url_base = data_config.get('url-backend-voting') + "/result"
 @result_blueprints.route("/result/insert", methods=['POST'])
 def insert_result() -> dict:
     result = request.get_json()
-    url = url_base + "/result/insert"
+    url = url_base + "/insert"
     response = requests.post(url, headers=HEADERS, json=result)
     return response.json()
