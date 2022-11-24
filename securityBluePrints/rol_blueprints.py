@@ -7,7 +7,7 @@ data_config = load_file_config()
 url_base = data_config.get('url-backend-security') + "/rol"
 
 
-@rol_blueprints.route("/rol", methods=['GET'])
+@rol_blueprints.route("/rols", methods=['GET'])
 def get_all_roles() -> dict:
     url = url_base + "/all"
     response = requests.get(url, headers=HEADERS)
@@ -29,7 +29,7 @@ def insert_rol() -> dict:
     return response.json()
 
 
-@rol_blueprints.route("/rol/update/<int:id_>", methods=['PATCH'])
+@rol_blueprints.route("/rol/update/<int:id_>", methods=['PUT'])
 def update_rol(id_: int) -> dict:
     rol = request.get_json()
     url = url_base + f'/update/{id_}'

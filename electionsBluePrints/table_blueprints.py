@@ -7,7 +7,7 @@ data_config = load_file_config()
 url_base = data_config.get('url-backend-voting') + "/table"
 
 
-@table_blueprints.route("/table", methods=['GET'])
+@table_blueprints.route("/tables", methods=['GET'])
 def get_all_tables() -> dict:
     url = url_base + "/all"
     response = requests.get(url, headers=HEADERS)

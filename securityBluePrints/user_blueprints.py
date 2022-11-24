@@ -7,7 +7,7 @@ data_config = load_file_config()
 url_base = data_config.get('url-backend-security') + "/user"
 
 
-@user_blueprints.route("/user", methods=['GET'])
+@user_blueprints.route("/users", methods=['GET'])
 def get_all_users() -> dict:
     url = url_base + "/all"
     response = requests.get(url, headers=HEADERS)
@@ -29,7 +29,7 @@ def insert_user() -> dict:
     return response.json()
 
 
-@user_blueprints.route("/user/update/<int:id_>", methods=['PATCH'])
+@user_blueprints.route("/user/update/<int:id_>", methods=['PUT'])
 def update_user(id_: int) -> dict:
     user = request.get_json()
     url = url_base + f'/update/{id_}'

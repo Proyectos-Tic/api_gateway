@@ -4,12 +4,12 @@ from flask_cors import CORS
 from flask_jwt_extended import (JWTManager, create_access_token, verify_jwt_in_request,
                                 get_jwt_identity)
 from waitress import serve
-from party_blueprints import party_blueprints
-from candidate_blueprints import candidate_blueprints
-from table_blueprints import table_blueprints
-from user_blueprints import user_blueprints
-from rol_blueprints import rol_blueprints
-from permission_blueprints import permission_blueprints
+from electionsBluePrints.party_blueprints import party_blueprints
+from electionsBluePrints.candidate_blueprints import candidate_blueprints
+from electionsBluePrints.table_blueprints import table_blueprints
+from securityBluePrints.user_blueprints import user_blueprints
+from securityBluePrints.rol_blueprints import rol_blueprints
+from securityBluePrints.permission_blueprints import permission_blueprints
 
 import requests
 
@@ -56,6 +56,7 @@ def login() -> tuple:
     response = requests.post(url, headers=utils.HEADERS, json=user)
     if response.status_code == 200:
         user_logged = response.json()
+        del user_logged['rol']['permissions']
         expires = timedelta(days=1)
         access_token = create_access_token(identity=user_logged, expires_delta=expires)
         return {"token": access_token, "user_id": user_logged.get('id')}, 200

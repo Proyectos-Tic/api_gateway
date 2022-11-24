@@ -7,7 +7,7 @@ data_config = load_file_config()
 url_base = data_config.get('url-backend-voting') + "/candidate"
 
 
-@candidate_blueprints.route("/candidate", methods=['GET'])
+@candidate_blueprints.route("/candidates", methods=['GET'])
 def get_all_candidates() -> dict:
     url = url_base + "/all"
     response = requests.get(url, headers=HEADERS)
