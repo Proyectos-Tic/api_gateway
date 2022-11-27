@@ -40,6 +40,8 @@ for module in modules:
         temp_endpoints = crud_endpoints
 
     for endpoint, method in temp_endpoints:
+        if(module=='voto' and endpoint=='/create'):
+            endpoint= '/create/mesa/?/candidato/?'
         permission_url = f'/{module}{endpoint}'
         body = {
             "url": permission_url,

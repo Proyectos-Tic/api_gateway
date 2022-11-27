@@ -48,7 +48,6 @@ def before_request_callback() -> tuple:
             has_grant = validate_grant(endpoint, request.method, user['rol'].get('idRol') )
             if not has_grant:
                 return {"message":f"The rol {user['rol']['idRol']}:{user['rol']['name']} doesn't have permission to access {endpoint}"}, 401
-            print(f'Permiso:{has_grant}')
         else:
             return {"message":"Permission denied. Rol not defined."}, 401
 

@@ -18,10 +18,10 @@ def get_voto_by_id(id_ : str) -> dict:
     response = requests.get(url, headers=HEADERS)
     return response.json()
 
-@voto_blueprint.route("/voto/create", methods=["POST"])
-def create_voto() -> dict:
-    voto = request.get_json()
-    url = url_base + f'/create'
+@voto_blueprint.route("/voto/create/mesa/<string:idMesa>/candidato/<string:idCandidato>", methods=["POST"])
+def create_voto(idMesa:str, idCandidato: str) -> dict:
+    voto = {}
+    url = url_base + f'/create/mesa/{idMesa}/candidato/{idCandidato}'
     response = requests.post(url, headers=HEADERS, json=voto)
     return response.json()
 
