@@ -36,4 +36,4 @@ def update_permission(id_ : int) -> dict:
 def delete_permission( id_ : int) -> dict:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
-    return response.json()
+    return {'Deleted':response.status_code}
