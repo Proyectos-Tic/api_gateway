@@ -25,7 +25,7 @@ def create_voto() -> dict:
     response = requests.post(url, headers=HEADERS, json=voto)
     return response.json()
 
-@voto_blueprint.route("/voto/update/<string:id_>", methods=["PATCH"])
+@voto_blueprint.route("/voto/update/<string:id_>", methods=["PUT"])
 def update_voto(id_ : str) -> dict:
     voto = request.get_json()
     url = url_base + f'/update/{id_}'

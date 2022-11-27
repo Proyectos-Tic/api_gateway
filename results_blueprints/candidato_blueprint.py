@@ -25,7 +25,7 @@ def create_candidato() -> dict:
     response = requests.post(url, headers=HEADERS, json=candidato)
     return response.json()
 
-@candidato_blueprint.route("/candidato/update/<string:id_>", methods=["PATCH"])
+@candidato_blueprint.route("/candidato/update/<string:id_>", methods=["PUT"])
 def update_candidato(id_ : str) -> dict:
     candidato = request.get_json()
     url = url_base + f'/update/{id_}'

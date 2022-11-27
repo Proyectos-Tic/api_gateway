@@ -25,7 +25,7 @@ def create_partido() -> dict:
     response = requests.post(url, headers=HEADERS, json=partido)
     return response.json()
 
-@partido_blueprint.route("/partido/update/<string:id_>", methods=["PATCH"])
+@partido_blueprint.route("/partido/update/<string:id_>", methods=["PUT"])
 def update_partido(id_ : str) -> dict:
     partido = request.get_json()
     url = url_base + f'/update/{id_}'

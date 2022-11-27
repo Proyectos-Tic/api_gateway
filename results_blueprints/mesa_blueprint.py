@@ -25,7 +25,7 @@ def create_mesa() -> dict:
     response = requests.post(url, headers=HEADERS, json=mesa)
     return response.json()
 
-@mesa_blueprint.route("/mesa/update/<string:id_>", methods=["PATCH"])
+@mesa_blueprint.route("/mesa/update/<string:id_>", methods=["PUT"])
 def update_mesa(id_ : str) -> dict:
     mesa = request.get_json()
     url = url_base + f'/update/{id_}'
