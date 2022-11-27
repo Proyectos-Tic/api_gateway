@@ -25,7 +25,7 @@ def create_rol() -> dict:
     response = requests.post(url, headers=HEADERS, json=rol)
     return response.json()
 
-@rol_blueprint.route("/rol/update/<int:id_>", methods=["POST"])
+@rol_blueprint.route("/rol/update/<int:id_>", methods=["PUT"])
 def update_rol(id_ : int) -> dict:
     rol = request.get_json()
     url = url_base + f'/update/{id_}'

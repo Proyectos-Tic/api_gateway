@@ -25,7 +25,7 @@ def create_permission() -> dict:
     response = requests.post(url, headers=HEADERS, json=permission)
     return response.json()
 
-@permission_blueprint.route("/permission/update/<int:id_>", methods=["POST"])
+@permission_blueprint.route("/permission/update/<int:id_>", methods=["PUT"])
 def update_permission(id_ : int) -> dict:
     permission = request.get_json()
     url = url_base + f'/update/{id_}'

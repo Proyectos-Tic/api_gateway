@@ -37,7 +37,7 @@ def create_user() -> dict:
     response = requests.post(url, headers=HEADERS, json=user)
     return response.json()
 
-@user_blueprint.route("/user/update/<int:id_>", methods=["POST"])
+@user_blueprint.route("/user/update/<int:id_>", methods=["PUT"])
 def update_user(id_ : int) -> dict:
     user = request.get_json()
     url = url_base + f'/update/{id_}'
