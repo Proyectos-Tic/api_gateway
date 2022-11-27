@@ -12,16 +12,22 @@ roles = [
 
 url = f'{security_backend}/rol/create'
 admin = None
+jurado = None
+ciudadano = None
 for rol in roles:
     response = requests.post(url, headers=headers, json=rol)
     if rol.get('name') == "Administrador":
         admin = response.json()
+    elif rol.get('name') == "Jurado":
+        jurado = response.json()
+    else:
+        ciudadano = response.json()
     print(response.json())
 print("="*30)
 
 # TODO: Create particular endpoints to match permission/rol [user, reports, candidate]
 # Basic permission related to Admin
-modules = ['candidato', 'mesa', 'partido', 'voto', 'reports' , 'permission', 'user', 'rol']
+modules = ['candidato', 'mesa', 'partido', 'permission', 'user', 'rol']
 crud_endpoints = [('/all', 'GET'), ('/?', 'GET'), ('/create', 'POST'), ('/update/?','PUT'), ('/delete/?', 'DELETE')]
 candidatos_endpoint = [('/?/partido/?', 'PUT')]
 user_endpoints = [('/by_id/?', 'GET'), ('/by_nickname/?', 'GET'), ('/by_email/?', 'GET')]
@@ -34,21 +40,59 @@ for module in modules:
         temp_endpoints = crud_endpoints + candidatos_endpoint
     elif module == 'user':
         temp_endpoints = crud_endpoints + user_endpoints
-    elif module == 'reports':
-        temp_endpoints = reports_endpoints
     else:
         temp_endpoints = crud_endpoints
 
     for endpoint, method in temp_endpoints:
-        if(module=='voto' and endpoint=='/create'):
-            endpoint= '/create/mesa/?/candidato/?'
         permission_url = f'/{module}{endpoint}'
         body = {
             "url": permission_url,
             "method": method
         }
+        #Create each method/url permission
         response = requests.post(url, headers=headers, json=body)
-        print(response.json())
+        print('Admin permission:',response.json())
         permission = response.json()
+        #Assign each permission per rol
+        #To Admin
         url_relation = f'{security_backend}/rol/update/{admin.get("idRol")}/add_permission/{permission.get("idPermission")}'
+        response = requests.put(url_relation, headers=headers)
+
+
+module = 'voto'
+for endpoint, method in crud_endpoints:
+    if(endpoint=='/create'):
+        endpoint='/create/mesa/?/candidato/?'
+    permission_url = f'/{module}{endpoint}'
+    body = {
+        "url": permission_url,
+        "method": method
+    }
+    #Create each method/url permission
+    response = requests.post(url, headers=headers, json=body)
+    print('Jury/Admin permission:',response.json())
+    permission = response.json()
+    #Assign each permission per rol
+    #To Jury/Admin
+    acceptedRoles = [admin, jurado]
+    for rol in acceptedRoles:
+        url_relation = f'{security_backend}/rol/update/{rol.get("idRol")}/add_permission/{permission.get("idPermission")}'
+        response = requests.put(url_relation, headers=headers)
+
+module = 'reports'
+for endpoint, method in reports_endpoints:
+    permission_url = f'/{module}{endpoint}'
+    body = {
+        "url": permission_url,
+        "method": method
+    }
+    #Create each method/url permission
+    response = requests.post(url, headers=headers, json=body)
+    print('Citizen/Jury/Admin permission:',response.json())
+    permission = response.json()
+    #Assign each permission per rol
+    #To Citizen/Jury/Admin
+    acceptedRoles = [admin, jurado, ciudadano]
+    for rol in acceptedRoles:
+        url_relation = f'{security_backend}/rol/update/{rol.get("idRol")}/add_permission/{permission.get("idPermission")}'
         response = requests.put(url_relation, headers=headers)

@@ -66,7 +66,7 @@ def login() -> tuple:
         del user_logged["rol"]["permissions"]
         expires = timedelta(days=1)
         access_token = create_access_token(identity=user_logged, expires_delta=expires)
-        return {"token":access_token, "user_id":user_logged.get("idUser")}, 200
+        return {"token":access_token, "user_id":user_logged.get("idUser"), "rol":user_logged.get('rol')}, 200
     else: 
         return {"message":"Access denied"}, 401
 
