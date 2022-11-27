@@ -29,7 +29,7 @@ def create_permission() -> dict:
 def update_permission(id_ : int) -> dict:
     permission = request.get_json()
     url = url_base + f'/update/{id_}'
-    response = requests.patch(url, headers=HEADERS, json=permission)
+    response = requests.put(url, headers=HEADERS, json=permission)
     return response.json()
 
 @permission_blueprint.route("/permission/delete/<int:id_>", methods=["DELETE"])

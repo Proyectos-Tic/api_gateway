@@ -29,7 +29,7 @@ def create_rol() -> dict:
 def update_rol(id_ : int) -> dict:
     rol = request.get_json()
     url = url_base + f'/update/{id_}'
-    response = requests.patch(url, headers=HEADERS, json=rol)
+    response = requests.put(url, headers=HEADERS, json=rol)
     return response.json()
 
 @rol_blueprint.route("/rol/delete/<int:id_>", methods=["DELETE"])

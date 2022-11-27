@@ -41,7 +41,7 @@ def create_user() -> dict:
 def update_user(id_ : int) -> dict:
     user = request.get_json()
     url = url_base + f'/update/{id_}'
-    response = requests.patch(url, headers=HEADERS, json=user)
+    response = requests.put(url, headers=HEADERS, json=user)
     return response.json()
 
 @user_blueprint.route("/user/delete/<int:id_>", methods=["DELETE"])
