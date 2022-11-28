@@ -29,17 +29,17 @@ def insert_party() -> dict:
     return response.json()
 
 
-@party_blueprints.route("/party/update/<string:id_>", methods=['PATCH'])
+@party_blueprints.route("/party/update/<string:id_>", methods=['PUT'])
 def update_party(id_: str) -> dict:
     party = request.get_json()
-    url = url_base + f'/update/{id_}'
+    url = f'{url_base}/update/{id_}'
     response = requests.patch(url, headers=HEADERS, json=party)
     return response.json()
 
 
 @party_blueprints.route("/party/delete/<string:id_>", methods=['DELETE'])
-def delete_party(id_: str) -> dict:
+def delete_party(id_: str) -> tuple:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
-    return response.json()
+    return {"message": "processed"}, response.status_code
 

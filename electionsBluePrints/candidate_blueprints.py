@@ -29,7 +29,7 @@ def insert_candidate() -> dict:
     return response.json()
 
 
-@candidate_blueprints.route("/candidate/update/<string:id_>", methods=['PATCH'])
+@candidate_blueprints.route("/candidate/update/<string:id_>", methods=['PUT'])
 def update_candidate(id_: str) -> dict:
     candidate = request.get_json()
     url = url_base + f'/update/{id_}'
@@ -38,8 +38,8 @@ def update_candidate(id_: str) -> dict:
 
 
 @candidate_blueprints.route("/candidate/delete/<string:id_>", methods=['DELETE'])
-def delete_candidate(id_: str) -> dict:
+def delete_candidate(id_: str) -> tuple:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
-    return response.json()
+    return {"message": "processed"}, response.status_code
 

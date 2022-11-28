@@ -29,7 +29,7 @@ def insert_table() -> dict:
     return response.json()
 
 
-@table_blueprints.route("/table/update/<string:id_>", methods=['PATCH'])
+@table_blueprints.route("/table/update/<string:id_>", methods=['PUT'])
 def update_table(id_: str) -> dict:
     table = request.get_json()
     url = url_base + f'/update/{id_}'
@@ -38,8 +38,8 @@ def update_table(id_: str) -> dict:
 
 
 @table_blueprints.route("/table/delete/<string:id_>", methods=['DELETE'])
-def delete_table(id_: str) -> dict:
+def delete_table(id_: str) -> tuple:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
-    return response.json()
+    return {"message": "processed"}, response.status_code
 

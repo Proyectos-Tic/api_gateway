@@ -32,14 +32,17 @@ def insert_user() -> dict:
 @user_blueprints.route("/user/update/<int:id_>", methods=['PUT'])
 def update_user(id_: int) -> dict:
     user = request.get_json()
+    print(user)
     url = url_base + f'/update/{id_}'
-    response = requests.patch(url, headers=HEADERS, json=user)
+    print(url_base + f'/update/{id_}')
+    response = requests.put(url, headers=HEADERS, json=user)
+    print(response)
     return response.json()
 
 
 @user_blueprints.route("/user/delete/<int:id_>", methods=['DELETE'])
-def delete_user(id_: int) -> dict:
+def delete_user(id_: int) -> tuple:
     url = url_base + f'/delete/{id_}'
     response = requests.delete(url, headers=HEADERS)
-    return response.json()
+    return {"message": "processed"}, response.status_code
 

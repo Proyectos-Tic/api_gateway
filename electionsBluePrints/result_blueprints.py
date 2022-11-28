@@ -8,8 +8,10 @@ url_base = data_config.get('url-backend-voting') + "/result"
 
 
 @result_blueprints.route("/result/insert", methods=['POST'])
-def insert_result() -> dict:
-    result = request.get_json()
-    url = url_base + "/insert"
-    response = requests.post(url, headers=HEADERS, json=result)
-    return response.json()
+def insert_result() -> tuple:
+    vote = request.get_json()
+    table_id = vote.get('table').get('_id')
+    candidate_id = vote.get('candidate').get('_id')
+    url = url_base + f"/table/{table_id}/candidate/{candidate_id}"
+    response = requests.post(url, headers=HEADERS, json=vote)
+    return {"message": "processed"}, response.status_code

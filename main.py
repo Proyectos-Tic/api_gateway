@@ -10,6 +10,7 @@ from electionsBluePrints.table_blueprints import table_blueprints
 from securityBluePrints.user_blueprints import user_blueprints
 from securityBluePrints.rol_blueprints import rol_blueprints
 from securityBluePrints.permission_blueprints import permission_blueprints
+from electionsBluePrints.result_blueprints import result_blueprints
 
 import requests
 
@@ -23,8 +24,9 @@ app.register_blueprint(party_blueprints)
 app.register_blueprint(candidate_blueprints)
 app.register_blueprint(table_blueprints)
 app.register_blueprint(user_blueprints)
-app.register_blueprint(rol_blueprints)
 app.register_blueprint(permission_blueprints)
+app.register_blueprint(rol_blueprints)
+app.register_blueprint(result_blueprints)
 
 
 @app.before_request
@@ -45,7 +47,7 @@ def before_request_callback():
 
 @app.route("/", methods=['GET'])
 def home():
-    response = { "message": "HELLO"}
+    response = {"message": "HELLO"}
     return response
 
 

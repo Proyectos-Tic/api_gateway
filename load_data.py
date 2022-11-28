@@ -19,11 +19,10 @@ for rol in roles:
 
 print("="*30)
 
-
 # PERMISSIONS RELATED TO ADMIN
-modules = ['party', 'table', 'candidate', 'result', 'user', 'rol']
+modules = ['party', 'table', 'candidate', 'user', 'rol']
 endpoints = [('s', 'GET'), ('/?', 'GET'), ('/insert', 'POST'), ('/update/?', 'PATCH'), ('/update/?', 'PUT'),
-             ('/delete/', 'DELETE')]
+             ('/delete/?', 'DELETE')]
 url = f'{security_backend}/permission/insert'
 
 for module in modules:
@@ -38,5 +37,18 @@ for module in modules:
         permission = response.json()
         url_relation = f'{security_backend}/rol/update/{admin.get("idRol")}/add_permission/{permission.get("id")}'
         response = requests.put(url_relation, headers=headers)
+
+
+url_voting = '/result/insert'
+voting_body = {
+    "url": url_voting,
+    "method": 'POST',
+}
+voting_response = requests.post(url, headers=headers, json=voting_body)
+print(voting_response)
+voting_json = voting_response.json()
+url_voting_relation = f'{security_backend}/rol/update/{admin.get("idRol")}/add_permission/{voting_json.get("id")}'
+v_response = requests.put(url_voting_relation, headers=headers)
+
 
 
